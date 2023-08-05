@@ -11,15 +11,16 @@ import java.util.Scanner;
 import static org.example.MongoDB.*;
 
 public class Main {
+    //public List<BankAccount> = new ArrayList<BankAccount>();
     //private static boolean loopcloser = true;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         List<BankAccount> acclist = new ArrayList<BankAccount>();
-        //acclist=fetchFromDB(acclist);
+        acclist=fetchFromDB(acclist);
 
         //System.out.println("Hello world!");
         while(true){
-            System.out.println("Choose an option: (a)Add Account (l)Display Accounts (s)Save to database (q)Quit");
+            System.out.println("Choose an option: (a)Add Account (l)Display Accounts (s)Save to database (d) Deposit funds (w)Withdraw funds (q)Quit");
             String option = sc.nextLine();
             switch(option){
                 case "a":{
@@ -43,12 +44,38 @@ public class Main {
             }
                 case "s":{
                     insertToDB(acclist);
+                    break;
                     //connectMongo();
+                }
+                case "d":{
+                    insertToDB(acclist);
+                    System.out.println("Enter account name to deposit");
+                    String bankName = sc.nextLine();
+                    System.out.println("Enter amount to be deposited:");
+                    int depAmount = Integer.parseInt(sc.nextLine());
+                    depositAccount(bankName,depAmount);
+                    acclist=fetchFromDB(acclist);
+
+                    break;
+
+                }
+                case "w":{
+                    insertToDB(acclist);
+                    System.out.println("Enter account name to withdraw");
+                    String bankName = sc.nextLine();
+                    System.out.println("Enter amount to be withdrawn:");
+                    int withAmount = Integer.parseInt(sc.nextLine());
+                    withdrawAccount(bankName,withAmount);
+                    acclist=fetchFromDB(acclist);
+
+                    break;
+
                 }
             }
 
 
             if (option.equals("q")){
+                insertToDB(acclist);
                 //loopcloser=false;
                 break;
             }
